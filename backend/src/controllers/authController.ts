@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { createUser } from "../services/authService";
-import { CreateUserInput } from "../db/schemas/userSchema";
-import { AppError, ConflictError } from "../utils/errors/customErrors";
+import { createUser, login } from "../services/authService";
+import { CreateUserInput, SignInInput } from "../db/schemas/userSchema";
+import { BadRequestError, ConflictError, NotFoundError } from "../utils/errors/customErrors";
 
 export const signup = async(req: Request, res: Response) => {
   try { 
@@ -22,4 +22,33 @@ export const signup = async(req: Request, res: Response) => {
       });     
     }
   }
+}
+
+export const signin = async(req: Request, res: Response) => {
+ try {
+  const { email, password} : SignInInput = req.body;
+  const token = await login(email, password);
+  res.status(200).json({
+    success: true,
+    token
+  });
+ } catch (error) {
+  if (error instanceof NotFoundError){
+    res.status(error.statusCode).json({
+      success: false,
+      message: error.message
+    });
+  } else if (error instanceof BadRequestError){
+    res.status(error.statusCode).json({
+      success: false,
+      message: error.message
+    });
+  } else {
+    console.log(error)
+    res.status(500).json({
+      success: false,
+      message: "Erro interno do servidor"
+    });
+  }
+ }
 }

@@ -1,19 +1,25 @@
 import { Request, Response } from "express";
-import { User } from "../models/User";
+import { createUser } from "../services/authService";
+import { CreateUserInput } from "../db/schemas/userSchema";
+import { AppError, ConflictError } from "../utils/errors/customErrors";
 
-export const userDbTest = async(req: Request, res: Response) => {
+export const signup = async(req: Request, res: Response) => {
   try { 
-    const { name, email, password } = req.body;
-
-    const user = await User.create({
-      name: name,
-      email: email,
-      password: password
-    });
-  
+    const { name, email, password } : CreateUserInput = req.body;
+    const user = await createUser(name, email, password);
     res.status(201).json({sucess: true, user});
   } catch(error) {
-    console.log(error);
-    res.status(500).json({ message: "Erro interno do servidor"});
+    if(error instanceof ConflictError){
+      res.status(error.statusCode).json({
+        success: false,
+        message: error.message
+      })
+    } else {
+      console.log(error);
+      res.status(500).json({
+        success: false,
+        message: "Erro interno do servidor" 
+      });     
+    }
   }
 }

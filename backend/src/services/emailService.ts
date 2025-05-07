@@ -1,5 +1,6 @@
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
+import { resetPasswordTemplate } from '../utils/templates/emailTemplates';
 
 dotenv.config();
 const transporter = nodemailer.createTransport({
@@ -12,16 +13,10 @@ const transporter = nodemailer.createTransport({
 
 export const sendEmailResetPassword = async(to: string, resetString: string) => {
   const resetUrl = `${process.env.CLIENT_URL}/reset-password/${resetString}`;
-  
-  const message = `
-    <h1>Password reset</h1>
-    <p>Você solicitou um reset de senha</p>
-    <p>Clique no link abaixo para resetar sua senha:</p>
-    <a href=${resetUrl}>Redefinir Senha</a>
-    <p>Se você não solicitou alteração de senha. Por favor, ignorar este email.</p>
-  `;
+  const message = resetPasswordTemplate(resetUrl);
 
   await transporter.sendMail({
+    from: `"todoApp" <${process.env.EMAIL_USER}>`,
     to,
     subject: "Solicitação de alteração de senha",
     html: message

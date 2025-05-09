@@ -32,7 +32,7 @@ export const login = async(email: string, password: string) => {
     throw new BadRequestError("Senha incorreta!");
   }
 
-  const token = jwt.sign({ id: user._id}, process.env.JWT_SECRET!,{ expiresIn: "1d"});
+  const token = jwt.sign({ id: user._id.toString() }, process.env.JWT_SECRET!,{ expiresIn: "1d" });
   return token;
 }
 

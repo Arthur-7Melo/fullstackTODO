@@ -7,7 +7,7 @@ export interface IUser extends Document {
   password: string;
   resetPasswordToken?: string;
   resetPasswordExpires?: Date;
-  createdAt: Date,
+  createdAt: Date;
   updatedAt: Date
 }
 

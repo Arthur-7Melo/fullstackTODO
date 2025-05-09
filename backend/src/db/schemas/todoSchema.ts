@@ -1,0 +1,9 @@
+import z from 'zod';
+
+export const createTodoSchema = z.object({
+  title: z.string().min(1, "Título é obrigatório"),
+  description: z.string().optional(),
+  priority: z.enum(['baixa', 'alta']),
+});
+
+export type CreateTodoInput = z.infer<typeof createTodoSchema>;

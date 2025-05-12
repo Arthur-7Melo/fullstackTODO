@@ -38,3 +38,11 @@ export const updateTodo = async (userId: Types.ObjectId, todoId: string, data: U
 
   return todo!;
 }
+
+export const deleteTodo = async (userId: Types.ObjectId, todoId: string): Promise<ITodo> => {
+  const deletedTodo = await Todo.findOneAndDelete(
+    { _id: todoId, user: userId }
+  )
+
+  return deletedTodo!;
+}

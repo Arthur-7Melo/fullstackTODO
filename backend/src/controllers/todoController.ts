@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { CreateTodoInput, UpdateTodoInput } from "../db/schemas/todoSchema";
-import { createTodo, getTodos, updateTodo } from "../services/todoService";
+import { createTodo, deleteTodo, getTodos, updateTodo } from "../services/todoService";
 import logger from "../utils/logger/logger";
 import { getErrorMessage, NotFoundError } from "../utils/errors/customErrors";
 
@@ -63,6 +63,26 @@ export const updateTodoHandler = async (req: Request, res: Response) => {
     });
   } catch (error) {
     logger.error(`Falha ao atualizar todo ${getErrorMessage(error)}`);
+    res.status(500).json({
+      success: false,
+      message: "Erro interno do servidor"
+    });
+  }
+}
+
+export const deleteTodoHandler = async (req: Request, res: Response) => {
+  try {
+    const userId = (req as any).user._id;
+    const todoId = req.params.id;
+
+    const deleted = await deleteTodo(userId, todoId);
+    res.status(200).json({
+      success: true,
+      todo: deleted,
+      message: "Todo excluído com sucesso"
+    });
+  } catch (error) {
+    logger.error(`Falha ao excluir todo ${getErrorMessage(error)}`);
     res.status(500).json({
       success: false,
       message: "Erro interno do servidor"

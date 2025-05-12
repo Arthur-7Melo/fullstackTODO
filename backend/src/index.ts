@@ -8,12 +8,12 @@ import todoRouter from './routes/todoRouter';
 const app = express();
 dotenv.config();
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 connectDB();
 
 app.use(express.json());
 app.use("/api/auth", authRouter);
-app.use("/api/v1/todo", todoRouter);
+app.use("/api/v1/todos", todoRouter);
 
 app.listen(port, () => {
   logger.info(`Api rodando na porta: ${port}`)

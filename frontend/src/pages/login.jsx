@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import API from '../api/axiosInstance';
 import { saveToken } from '../utils/auth';
 import { CiLogin } from 'react-icons/ci';
@@ -81,6 +81,14 @@ function Login() {
         <button type="submit" disabled={loading}>
           {loading ? 'Entrando...' : 'Entrar'}
         </button>
+        <div className="form-footer">
+          <p className="form-footer-p">
+            Ainda não possui conta?{' '}
+            <Link to="/register" className="form-footer-link">
+              Cadastre-se
+            </Link>
+          </p>
+        </div>
       </form>
     </div>
   );

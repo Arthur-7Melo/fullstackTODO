@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import API from '../api/axiosInstance';
 import { FaRegRegistered } from "react-icons/fa";
 
@@ -127,6 +127,14 @@ function Register() {
         <button type="submit" disabled={loading}>
           {loading ? 'Cadastrando...' : 'Cadastrar'}
         </button>
+        <div className="form-footer">
+          <p className="form-footer-p">
+            Já possui conta?{' '}
+            <Link to="/login" className="form-footer-link">
+              Login
+            </Link>
+          </p>
+        </div>
       </form>
     </div>
   );

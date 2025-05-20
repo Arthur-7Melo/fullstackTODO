@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { useNavigate, Link } from 'react-router-dom';
 import API from '../api/axiosInstance';
-import { saveToken } from '../utils/auth';
 import { CiLogin } from 'react-icons/ci';
-
+import { useAuth } from "../hooks/useAuth";
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -11,6 +10,7 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,8 +19,10 @@ function Login() {
     try {
       const res = await API.post("/auth/signin", { email, password });
       console.log('Resposta:', res.data);
-      saveToken(res.data.token);
-      navigate('/');
+      login(res.data.token)
+      navigate('/todos', {
+        replace: true
+      });
     } catch (error) {
       if (error.response?.data?.error?.length > 0) {
         const zodMessages = error.response.data.error.map(err => err.message);
@@ -38,58 +40,60 @@ function Login() {
   };
 
   return (
-    <div className="login-container">
-      <div className="login-hero">
-        <CiLogin size={48} />
-      </div>
-      <form onSubmit={handleSubmit} className="login-form">
-        <h2>Login</h2>
-        {error && <div className="error">{error}</div>}
+    <div className="auth-page">
+      <div className="login-container">
+        <div className="login-hero">
+          <CiLogin size={48} />
+        </div>
+        <form onSubmit={handleSubmit} className="login-form">
+          <h2>Login</h2>
+          {error && <div className="error">{error}</div>}
 
-        <div className="form-group">
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            placeholder="Email"
-            name="email"
-            value={email}
-            onChange={e => {
-              setEmail(e.target.value);
-              if (error) {
-                setError('')
-              };
-            }}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            placeholder="Password"
-            name="password"
-            value={password}
-            onChange={e => {
-              setPassword(e.target.value);
-              if (error) {
-                setError('')
-              };
-            }}
-            required
-          />
-        </div>
-        <button type="submit" disabled={loading}>
-          {loading ? 'Entrando...' : 'Entrar'}
-        </button>
-        <div className="form-footer">
-          <p className="form-footer-p">
-            Ainda não possui conta?{' '}
-            <Link to="/register" className="form-footer-link">
-              Cadastre-se
-            </Link>
-          </p>
-        </div>
-      </form>
+          <div className="form-group">
+            <label htmlFor="email">Email:</label>
+            <input
+              type="email"
+              placeholder="Email"
+              name="email"
+              value={email}
+              onChange={e => {
+                setEmail(e.target.value);
+                if (error) {
+                  setError('')
+                };
+              }}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password:</label>
+            <input
+              type="password"
+              placeholder="Password"
+              name="password"
+              value={password}
+              onChange={e => {
+                setPassword(e.target.value);
+                if (error) {
+                  setError('')
+                };
+              }}
+              required
+            />
+          </div>
+          <button type="submit" disabled={loading}>
+            {loading ? 'Entrando...' : 'Entrar'}
+          </button>
+          <div className="form-footer">
+            <p className="form-footer-p">
+              Ainda não possui conta?{' '}
+              <Link to="/register" className="form-footer-link">
+                Cadastre-se
+              </Link>
+            </p>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

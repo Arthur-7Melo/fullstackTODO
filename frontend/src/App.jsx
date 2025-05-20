@@ -1,7 +1,9 @@
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Login from './pages/login';
-import './App.css'
 import Register from './pages/register';
+import TodosPage from './pages/todosPage';
+import PrivateRoute from './components/privateRoute';
+import './App.css'
 
 function App() {
   return (
@@ -9,7 +11,19 @@ function App() {
       <Routes>
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
-        <Route path='*' element={<Navigate to="/login" replace />} />
+
+        <Route element={<PrivateRoute />}>
+          <Route path='/todos' element={<TodosPage />} />
+        </Route>
+
+        <Route
+          path='*'
+          element={
+            localStorage.getItem('token')
+              ? <Navigate to='/todos' replace />
+              : <Navigate to='/login' replace />
+          }
+        />
       </Routes>
     </Router>
   )

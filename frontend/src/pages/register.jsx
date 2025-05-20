@@ -48,94 +48,96 @@ function Register() {
   }
 
   return (
-    <div className="register-container">
-      <div className="login-hero">
-        <FaRegRegistered size={48} />
+    <div className="auth-page">
+      <div className="register-container">
+        <div className="login-hero">
+          <FaRegRegistered size={48} />
+        </div>
+
+        <form onSubmit={handleSubmit} className="register-form">
+          <h2>Sign Up</h2>
+          {success && (
+            <div className="register-success">{success}</div>
+          )}
+          {error && <div className="register-error">{error}</div>}
+
+          <div className="form-group">
+            <label htmlFor="name">Name:</label>
+            <input
+              type="name"
+              placeholder="Name"
+              name="name"
+              value={name}
+              onChange={e => {
+                setName(e.target.value);
+                if (error) {
+                  setError('')
+                };
+              }}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="email">Email:</label>
+            <input
+              type="email"
+              placeholder="Email"
+              name="email"
+              value={email}
+              onChange={e => {
+                setEmail(e.target.value);
+                if (error) {
+                  setError('')
+                };
+              }}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password:</label>
+            <input
+              type="password"
+              placeholder="Password"
+              name="password"
+              value={password}
+              onChange={e => {
+                setPassword(e.target.value);
+                if (error) {
+                  setError('')
+                };
+              }}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="confirmPassword">Confirm your Password:</label>
+            <input
+              type="password"
+              placeholder="********"
+              name="confirmPassword"
+              value={confirmPassword}
+              onChange={e => {
+                setConfirmPassword(e.target.value);
+                if (error) {
+                  setError('')
+                };
+              }}
+              required
+            />
+          </div>
+          <button type="submit" disabled={loading}>
+            {loading ? 'Cadastrando...' : 'Cadastrar'}
+          </button>
+          <div className="form-footer">
+            <p className="form-footer-p">
+              Já possui conta?{' '}
+              <Link to="/login" className="form-footer-link">
+                Login
+              </Link>
+            </p>
+          </div>
+        </form>
       </div>
-
-      <form onSubmit={handleSubmit} className="register-form">
-        <h2>Sign Up</h2>
-        {success && (
-          <div className="register-success">{success}</div>
-        )}
-        {error && <div className="register-error">{error}</div>}
-
-        <div className="form-group">
-          <label htmlFor="name">Name:</label>
-          <input
-            type="name"
-            placeholder="Name"
-            name="name"
-            value={name}
-            onChange={e => {
-              setName(e.target.value);
-              if (error) {
-                setError('')
-              };
-            }}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            placeholder="Email"
-            name="email"
-            value={email}
-            onChange={e => {
-              setEmail(e.target.value);
-              if (error) {
-                setError('')
-              };
-            }}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            placeholder="Password"
-            name="password"
-            value={password}
-            onChange={e => {
-              setPassword(e.target.value);
-              if (error) {
-                setError('')
-              };
-            }}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="confirmPassword">Confirm your Password:</label>
-          <input
-            type="password"
-            placeholder="********"
-            name="confirmPassword"
-            value={confirmPassword}
-            onChange={e => {
-              setConfirmPassword(e.target.value);
-              if (error) {
-                setError('')
-              };
-            }}
-            required
-          />
-        </div>
-        <button type="submit" disabled={loading}>
-          {loading ? 'Cadastrando...' : 'Cadastrar'}
-        </button>
-        <div className="form-footer">
-          <p className="form-footer-p">
-            Já possui conta?{' '}
-            <Link to="/login" className="form-footer-link">
-              Login
-            </Link>
-          </p>
-        </div>
-      </form>
     </div>
   );
 }

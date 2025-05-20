@@ -1,0 +1,76 @@
+.todo-item {
+  position: relative;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 1.5rem;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: box-shadow 0.1s;
+  cursor: pointer;
+  max-width: 340px;
+}
+.todo-item:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.delete-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  color: #c0392b;
+  font-weight: bold;
+  cursor: pointer;
+}
+.delete-btn:hover {
+  color: #e74c3c;
+}
+
+.todo-item h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #2c3e50;
+}
+
+.todo-item p {
+  margin: 0;
+  color: #555;
+  flex: 1;
+  font-size: 0.95rem;
+  max-height: calc(1.4em * 4);
+  overflow-y: auto;
+  word-wrap: break-word;
+  hyphens: auto;
+  padding-right: 0.5rem;
+}
+
+.todo-item p::-webkit-scrollbar {
+  width: 6px;
+}
+
+.todo-item p::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.2);
+  border-radius: 3px;
+}
+
+.priority-badge {
+  align-self: flex-start;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #fff;
+  text-transform: uppercase;
+}
+.priority-badge.alta {
+  background: #e74c3c;
+  border-left: 5px solid #c0392b;
+}
+.priority-badge.baixa {
+  background: #27ae60;
+  border-left: 5px solid #1e8449;
+}

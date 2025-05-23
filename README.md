@@ -55,7 +55,6 @@ npm run dev
 ```
 
 ### POST /api/auth/forgot-password
-**Ainda não implementado no front**
 
 - **Descrição:** Envia e-mail com token de reset
 - **REQUEST BODY:**
@@ -67,7 +66,6 @@ npm run dev
 ```
 
 ### POST /api/auth/reset-password/:token
-**Ainda não implementado no front**
 
 - **Descrição:** Atualiza senha usando token de recuperação
 - **REQUEST BODY:**

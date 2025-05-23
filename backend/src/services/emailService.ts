@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export const sendEmailResetPassword = async(to: string, resetString: string) => {
+export const sendEmailResetPassword = async (to: string, resetString: string) => {
   const resetUrl = `${process.env.CLIENT_URL}/reset-password/${resetString}`;
   const message = resetPasswordTemplate(resetUrl);
 

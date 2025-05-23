@@ -2,27 +2,26 @@ import { useState } from "react";
 import { useNavigate, Link } from 'react-router-dom';
 import API from '../api/axiosInstance';
 import { CiLogin } from 'react-icons/ci';
-import { useAuth } from "../hooks/useAuth";
 
-function Login() {
+function ForgotPassword() {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      const res = await API.post("/auth/signin", { email, password });
-      console.log('Resposta:', res.data);
-      login(res.data.token)
-      navigate('/todos', {
-        replace: true
-      });
+      const res = await API.post("/auth/forgot-password", { email });
+      setSuccess("Verifique seu Email para redefinição de senha...")
+      setTimeout(() => {
+        navigate('/login', {
+          replace: true
+        });
+      }, 2000);
     } catch (error) {
       if (error.response?.data?.error?.length > 0) {
         const zodMessages = error.response.data.error.map(err => err.message);
@@ -32,7 +31,7 @@ function Login() {
         setError(error.response.data.message);
       }
       else {
-        setError('Falha ao fazer login. Tente novamente.');
+        setError('Falha ao enviar email. Tente novamente.');
       }
     } finally {
       setLoading(false);
@@ -41,12 +40,15 @@ function Login() {
 
   return (
     <div className="auth-page">
-      <div className="login-container">
+      <div className="forgotPass-container">
         <div className="login-hero">
           <CiLogin size={48} />
         </div>
-        <form onSubmit={handleSubmit} className="login-form">
-          <h2>Login</h2>
+        <form onSubmit={handleSubmit} className="forgotPass-form">
+          <h2>Esqueceu a Senha?</h2>
+          {success && (
+            <div className="register-success">{success}</div>
+          )}
           {error && <div className="error">{error}</div>}
 
           <div className="form-group">
@@ -65,36 +67,16 @@ function Login() {
               required
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="password">Password:</label>
-            <input
-              type="password"
-              placeholder="Password"
-              name="password"
-              value={password}
-              onChange={e => {
-                setPassword(e.target.value);
-                if (error) {
-                  setError('')
-                };
-              }}
-              required
-            />
-          </div>
+
           <button type="submit" disabled={loading}>
-            {loading ? 'Entrando...' : 'Entrar'}
+            {loading ? 'Enviando...' : 'Enviar'}
           </button>
+
           <div className="form-footer">
             <p className="form-footer-p">
-              Ainda não possui conta?{' '}
-              <Link to="/register" className="form-footer-link">
-                Cadastre-se
-              </Link>
-            </p>
-            <p className="form-footer-p2">
-              Esqueceu sua senha?{' '}
-              <Link to="/forgot-password" className="form-footer-link">
-                Redefinir Senha
+              Não precisa redefinir sua senha?{' '}
+              <Link to="/login" className="form-footer-link">
+                Login
               </Link>
             </p>
           </div>
@@ -104,4 +86,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default ForgotPassword;

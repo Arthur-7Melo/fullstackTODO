@@ -83,6 +83,13 @@ body{
   color: #555;
 }
 
+.form-footer-p2 {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #555;
+  padding: 2px;
+}
+
 .form-footer-link {
   color: #14960f;
   font-weight: 500;
@@ -225,4 +232,68 @@ body{
   font-size: 1rem;
   color: #666;
   text-align: center;
+}
+
+.forgotPass-container, 
+.resetPass-container {
+  min-width: 300px;
+  max-width: 340px;
+  margin: 0 auto;
+  border: 3px solid #ccc;
+  border-radius: 15px;
+  background: #fff;
+}
+
+.forgotPass-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.forgotPass-form h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #14960f;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.forgotPass-form button,
+.resetPass-form button {
+  margin: 0 2rem;
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 5px;
+  background: #48c244;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.forgotPass-form button:hover,
+.resetPass-form button:hover {
+  background: #2ba127;
+}
+
+.forgotPass-form button:disabled,
+.resetPass-form button:disabled {
+  background: #aaa;
+  cursor: default;
+}
+
+.resetPass-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.resetPass-form h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #14960f;
+  font-size: 1.5rem;
+  font-weight: 700;
 }
